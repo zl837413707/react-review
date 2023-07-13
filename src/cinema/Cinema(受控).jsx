@@ -7,7 +7,7 @@ export default class Cinema extends Component {
 
     this.state = {
       cinemas: [],
-      backCinemas: [],
+      keyWord: "",
     };
 
     axios({
@@ -23,28 +23,41 @@ export default class Cinema extends Component {
       // console.log(res.data.data.cinemas);
       this.setState({
         cinemas: res.data.data.cinemas,
-        backCinemas: res.data.data.cinemas,
       });
     });
   }
+  // change = (event) => {
+  //   let newCinemas = this.state.backCinemas.filter((item) => {
+  //     return (
+  //       item.name.toUpperCase().includes(event.target.value.toUpperCase()) ||
+  //       item.address.toUpperCase().includes(event.target.value.toUpperCase())
+  //     );
+  //   });
+  //   this.setState({
+  //     cinemas: newCinemas,
+  //   });
+  // };
 
   change = (event) => {
-    let newCinemas = this.state.backCinemas.filter((item) => {
-      return (
-        item.name.toUpperCase().includes(event.target.value.toUpperCase()) ||
-        item.address.toUpperCase().includes(event.target.value.toUpperCase())
-      );
-    });
     this.setState({
-      cinemas: newCinemas,
+      keyWord: event.target.value,
+    });
+  };
+
+  getCinemasList = () => {
+    return this.state.cinemas.filter((item) => {
+      return (
+        item.name.toUpperCase().includes(this.state.keyWord.toUpperCase()) ||
+        item.address.toUpperCase().includes(this.state.keyWord.toUpperCase())
+      );
     });
   };
 
   render() {
     return (
       <div>
-        <input type="text" onInput={this.change} />
-        {this.state.cinemas.map((item) => {
+        <input type="text" value={this.state.keyWord} onChange={this.change} />
+        {this.getCinemasList().map((item) => {
           return (
             <dl key={item.cinemaId}>
               <dt>{item.name}</dt>

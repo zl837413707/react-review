@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './cinema';
+import App from './todolist(受控)';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
